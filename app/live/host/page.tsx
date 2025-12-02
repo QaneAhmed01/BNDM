@@ -3,29 +3,22 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { SetupPanel } from "@/components/SetupPanel";
+import { useMutation } from "convex/react";
+import { api } from "@/convex/_generated/api";
 
 export default function HostSetupPage() {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
+    const createRoom = useMutation(api.createRoom.create);
 
     async function handleStart(names: string[]) {
         setLoading(true);
         try {
-            const res = await fetch("/api/live/host", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ names }),
-            });
-
-            if (res.ok) {
-                const room = await res.json();
-                router.push(`/live/host/${room.code}`);
-            } else {
-                alert("Failed to create room");
-            }
+            const room = await createRoom({ names });
+            router.push(`/live/host/${room.code}`);
         } catch (error) {
             console.error(error);
-            alert("Error creating room");
+            alert("Failed to create room");
         } finally {
             setLoading(false);
         }

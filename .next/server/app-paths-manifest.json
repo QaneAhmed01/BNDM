@@ -1,22 +1,17 @@
 {
   "/_not-found": "app/_not-found.js",
-  "/api/commentary/route": "app/api/commentary/route.js",
   "/api/baby-commentary/route": "app/api/baby-commentary/route.js",
-  "/api/live/state/route": "app/api/live/state/route.js",
-  "/api/live/host/route": "app/api/live/host/route.js",
-  "/api/live/control/route": "app/api/live/control/route.js",
-  "/api/live/join/route": "app/api/live/join/route.js",
   "/api/poll/[id]/route": "app/api/poll/[id]/route.js",
+  "/api/poll/[id]/vote/route": "app/api/poll/[id]/vote/route.js",
   "/api/poll/route": "app/api/poll/route.js",
   "/join/page": "app/join/page.js",
   "/live/host/[code]/page": "app/live/host/[code]/page.js",
-  "/api/poll/[id]/vote/route": "app/api/poll/[id]/vote/route.js",
-  "/live/play/[code]/page": "app/live/play/[code]/page.js",
-  "/api/live/vote/route": "app/api/live/vote/route.js",
-  "/page": "app/page.js",
-  "/poll/create/page": "app/poll/create/page.js",
   "/live/host/page": "app/live/host/page.js",
+  "/api/commentary/route": "app/api/commentary/route.js",
   "/poll/[id]/results/page": "app/poll/[id]/results/page.js",
+  "/tournament/page": "app/tournament/page.js",
+  "/live/play/[code]/page": "app/live/play/[code]/page.js",
+  "/poll/create/page": "app/poll/create/page.js",
   "/poll/[id]/page": "app/poll/[id]/page.js",
-  "/tournament/page": "app/tournament/page.js"
+  "/page": "app/page.js"
 }

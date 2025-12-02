@@ -13,6 +13,7 @@ import type * as castVote from "../castVote.js";
 import type * as createRoom from "../createRoom.js";
 import type * as getRoomState from "../getRoomState.js";
 import type * as joinRoom from "../joinRoom.js";
+import type * as polls from "../polls.js";
 import type * as tournament from "../tournament.js";
 
 import type {
@@ -27,6 +28,7 @@ declare const fullApi: ApiFromModules<{
   createRoom: typeof createRoom;
   getRoomState: typeof getRoomState;
   joinRoom: typeof joinRoom;
+  polls: typeof polls;
   tournament: typeof tournament;
 }>;
 
