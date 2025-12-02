@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
-import { AggregatedMatchResult } from "@/lib/tournament";
-
 const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
+
+interface AggregatedMatchResult {
+  left: string;
+  right: string | null;
+  leftVotes: number;
+  rightVotes: number;
+  roundIndex?: number;
+  matchIndex?: number;
+}
 
 export async function POST(req: Request) {
   if (!OPENAI_API_KEY) {

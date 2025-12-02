@@ -3,6 +3,12 @@
 import { useMemo, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+export interface SetupData {
+  parentNames: string;
+  babyNames: string[];
+  dueLabel: string;
+}
+
 interface SetupPanelProps {
   onStart: (names: string[]) => void;
 }
