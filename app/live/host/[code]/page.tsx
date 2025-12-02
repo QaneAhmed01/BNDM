@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { PlaybackPanel } from "@/components/PlaybackPanel";
@@ -9,9 +10,16 @@ import { api } from "@/convex/_generated/api";
 export default function HostDashboardPage() {
     const params = useParams();
     const code = params.code as string;
+    const [joinLink, setJoinLink] = useState("");
 
     const state = useQuery(api.getRoomState.get, { code });
     const advanceMatch = useMutation(api.advanceMatch.advance);
+
+    useEffect(() => {
+        if (typeof window !== "undefined") {
+            setJoinLink(`${window.location.origin}/join?code=${code}`);
+        }
+    }, [code]);
 
     if (!state) return <div className="p-10 text-center">Connecting to room...</div>;
 
@@ -44,6 +52,23 @@ export default function HostDashboardPage() {
                 <div className="flex flex-col items-end">
                     <span className="text-xs uppercase tracking-widest text-preg-ink/50">Join Code</span>
                     <span className="text-4xl font-black text-preg-ink tracking-widest">{code}</span>
+                    {joinLink && (
+                        <div className="mt-4 p-3 rounded-2xl bg-white/80 border border-preg-peach/40 text-center shadow-sm">
+                            <p className="text-[11px] font-semibold text-preg-ink/60 mb-2">
+                                Scan to join instantly
+                            </p>
+                            <div className="mx-auto w-40 h-40 bg-white rounded-xl overflow-hidden border border-preg-peach/30">
+                                <img
+                                    src={`https://api.qrserver.com/v1/create-qr-code/?size=240x240&data=${encodeURIComponent(joinLink)}`}
+                                    alt="Join QR code"
+                                    className="w-full h-full object-contain"
+                                />
+                            </div>
+                            <p className="mt-2 text-[10px] text-preg-ink/40 break-all">
+                                {joinLink}
+                            </p>
+                        </div>
+                    )}
                 </div>
             </header>
 
