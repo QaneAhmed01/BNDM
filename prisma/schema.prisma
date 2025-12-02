@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Poll {
+  id        String      @id @default(cuid())
+  title     String
+  createdAt DateTime    @default(now())
+  expiresAt DateTime
+  isClosed  Boolean     @default(false)
+  candidates Candidate[]
+}
+
+model Candidate {
+  id        String   @id @default(cuid())
+  name      String
+  voteCount Int      @default(0)
+  pollId    String
+  poll      Poll     @relation(fields: [pollId], references: [id], onDelete: Cascade)
+}
+
+model Room {
+  code        String   @id
+  status      String   @default("LOBBY") // LOBBY, VOTING, REVEAL, FINISHED
+  currentRound Int     @default(0)
+  currentMatch Int     @default(0)
+  createdAt   DateTime @default(now())
+  bracketState String  // JSON string of the full tournament tree
+  players     Player[]
+}
+
+model Player {
+  id        String   @id @default(cuid())
+  name      String
+  roomCode  String
+  room      Room     @relation(fields: [roomCode], references: [code], onDelete: Cascade)
+  votes     Vote[]
+}
+
+model Vote {
+  id        String   @id @default(cuid())
+  playerId  String
+  player    Player   @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  matchId   String
+  choice    String
+}
