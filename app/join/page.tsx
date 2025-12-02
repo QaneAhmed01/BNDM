@@ -1,13 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useMutation } from "convex/react";
 import { api } from "@/convex/_generated/api";
 
 export default function JoinPage() {
     const router = useRouter();
-    const searchParams = useSearchParams();
     const [code, setCode] = useState("");
     const [name, setName] = useState("");
     const [loading, setLoading] = useState(false);
@@ -15,11 +14,14 @@ export default function JoinPage() {
     const joinRoom = useMutation(api.joinRoom.join);
 
     useEffect(() => {
-        const preset = (searchParams.get("code") ?? "").toUpperCase();
+        const preset =
+            typeof window !== "undefined"
+                ? (new URLSearchParams(window.location.search).get("code") ?? "").toUpperCase()
+                : "";
         if (preset) {
             setCode(preset);
         }
-    }, [searchParams]);
+    }, []);
 
     async function handleJoin(e: React.FormEvent) {
         e.preventDefault();
